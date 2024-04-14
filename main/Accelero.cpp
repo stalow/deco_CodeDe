@@ -1,7 +1,14 @@
+// Auteur : hicham
+// fonction gestion accelero /setup 
+// fonction pour detecter la face du haut
+
+
 
 #include "M5StickCPlus.h"
-#include "Accelero.h"
-#include "settings.h"
+
+
+#include "./headers/Accelero.h"
+#include "./headers/settings.h"
 
 unsigned char ancienne_face = 0; // face veille pour init
 unsigned char Face_detecte = 0;

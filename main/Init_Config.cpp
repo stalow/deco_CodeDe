@@ -1,7 +1,11 @@
-#include "Init_Config.h"
-#include "Eeprom_Controller.h"
-#include "State_Flags.h"
-#include "settings.h"
+// auteur : Hicham
+//fct page config 
+
+
+#include "./headers/Init_Config.h"
+#include "./headers/Eeprom_Controller.h"
+#include "./headers/State_Flags.h"
+#include "./headers/settings.h"
 
 AsyncWebServer server(80);
 String ssid;
@@ -132,7 +136,8 @@ void setupWiFiAP()
 }
 
 bool checkInitFile()
-{
+{   
+    listFiles(); // voir tous les fichier dispo 
     // Vérifier si le fichier "init.txt" existe
     if (SPIFFS.exists("/init.txt"))
     {
@@ -142,7 +147,7 @@ bool checkInitFile()
     else
     {
         DEBUG_PRINTLN("Le fichier init.txt n'existe pas.");
-        return false;
+        return true;
     }
 }
 

@@ -1,16 +1,18 @@
 #include <Arduino.h>
 #include "M5StickCPlus.h"
-#include "Init_Config.h"
-#include "State_Flags.h"
-#include "Wifi_Function.h"
 
-#include "Send_data.h"
-#include "Save_Data.h"
 
-#include "Count.h"
-#include "Accelero.h"
+#include "./headers/Init_Config.h"
+#include "./headers/State_Flags.h"
+#include "./headers/Wifi_Function.h"
 
-#include "settings.h"
+#include "./headers/Send_data.h"
+#include "./headers/Save_Data.h"
+
+#include "./headers/Count.h"
+#include "./headers/Accelero.h"
+
+#include "./headers/settings.h"
 
 enum State
 {
@@ -121,13 +123,14 @@ void loop()
         {
             DEBUG_PRINTLN("appui bouton go ack ");
             currentState = CONNWIFI;
-            FLAG_BTN_A_PRESSED = false //reset
+            FLAG_BTN_A_PRESSED = false; //reset
         }
 
         if (FLAG_BTN_OFF_PRESSED)
         {
             currentState = SAVE_DATA;
-            FLAG_BTN_OFF_PRESSED = false //reset        }
+            FLAG_BTN_OFF_PRESSED = false; //reset        
+        }
 
         // Ajoutez le code correspondant pour le mode INIT ici
         break;

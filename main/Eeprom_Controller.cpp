@@ -1,8 +1,12 @@
-#include "Eeprom_Controller.h"
-#include "settings.h"
+// auteur: Hicham
+// fct gestion de la récupération et enregistrement des logs wifi en spiffs
+
 #include <FS.h>
 #include "SPIFFS.h"
 #include <Arduino.h>
+
+#include "./headers/Eeprom_Controller.h"
+#include "./headers/settings.h"
 
 void incrementNumPairs()
 {

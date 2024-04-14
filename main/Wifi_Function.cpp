@@ -1,10 +1,14 @@
-#include "Eeprom_Controller.h"
-#include "Wifi_Function.h"
-#include "settings.h"
+//auteur : Hicham
+//fct gestion wifi
+
 #include <WiFi.h>
 #include <FS.h>
 #include "SPIFFS.h"
 #include <Arduino.h>
+
+#include "./headers/Eeprom_Controller.h"
+#include "./headers/Wifi_Function.h"
+#include "./headers/settings.h"
 
 bool connectToStoredWiFi()
 {

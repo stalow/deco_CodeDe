@@ -1,6 +1,9 @@
+// auteur: Hicham
+// definition des states
 
-#include "State_Flags.h"
-#include "settings.h"
+
+#include "./headers/State_Flags.h"
+#include "./headers/settings.h"
 
 bool FLAG_FIRST_START = false;
 bool FLAG_PAGE_WIFI_STARTED= false;

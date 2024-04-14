@@ -1,6 +1,12 @@
-#include "Count.h"
-#include "settings.h"
+// Auteur : hicham
+// fonction conversion en seconde
+// conversion en string depuis le tableau
+// fonction pour stocker le temps compté dans un tableau
+
 #include <cstdio>
+#include "./headers/Count.h"
+#include "./headers/settings.h"
+
 
 
 unsigned long Tab_Temp[6]; // tableau compteur

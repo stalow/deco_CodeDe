@@ -1,6 +1,10 @@
+// auteur: Hicham
+//fct send data to api
+
 #include <HTTPClient.h>
-#include "Send_data.h"
-#include "settings.h"
+
+#include "./headers/Send_data.h"
+#include "./headers/settings.h"
 
 
 

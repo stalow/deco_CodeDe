@@ -1,8 +1,12 @@
-#include "Save_Data.h"
-#include "settings.h"
+// auteur: hicham
+// focntion save des data de comptage
+
 #include <cstdio>
 #include <FS.h>
 #include "SPIFFS.h"
+
+#include "./headers/Save_Data.h"
+#include "./headers/settings.h"
 
 void saveToSPIFFS(unsigned long Temp_Tab[6], const char *fileName) {
   // Open the file in write mode (create if it doesn't exist)
