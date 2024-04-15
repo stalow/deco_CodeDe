@@ -29,7 +29,7 @@ unsigned char detect_face()
 {
   M5.IMU.getAccelData(&accX, &accY, &accZ);
   //DEBUG_PRINTLN("***************************************************");
-  // Serial.printf(" X= %5.2f   Y= %5.2f   Z= %5.2f\n", accX, accY, accZ);
+  //Serial.printf(" X= %5.2f   Y= %5.2f   Z= %5.2f\n", accX, accY, accZ);
 
   if (-0.2 <= accX && accX <= 0.2 &&
       -0.2 <= accY && accY <= 0.2 &&

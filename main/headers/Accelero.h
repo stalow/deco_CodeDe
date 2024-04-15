@@ -10,7 +10,7 @@ extern float accX;
 extern float accY;
 extern float accZ;
 
-
+void setup_IMU();
 unsigned char detect_face();
 
 

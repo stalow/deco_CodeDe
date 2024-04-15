@@ -8,91 +8,87 @@
 #include "./headers/Eeprom_Controller.h"
 #include "./headers/settings.h"
 
-void incrementNumPairs()
-{
-    File file = SPIFFS.open("/config.txt", "r+");
-    if (!file)
-    {
-        DEBUG_PRINTLN("Erreur lors de l'ouverture du fichier SPIFFS !");
-        return;
-    }
-
-    int numPairs = file.read();
-    DEBUG_PRINTLN("numpaire trouve");
-    DEBUG_PRINTLN(numPairs);
-    numPairs++;
-
-    file.seek(0);
-    file.write(numPairs);
-
-    file.close();
-}
-
 int getNumPairs()
 {
-    File file = SPIFFS.open("/config.txt", "r");
+    File file = SPIFFS.open("/wifi.txt", "r");
     if (!file)
     {
-        DEBUG_PRINTLN("Le fichier /config.txt n'existe pas. Création du fichier avec la valeur 0.");
-        file = SPIFFS.open("/config.txt", "w");
-        if (!file)
-        {
-            DEBUG_PRINTLN("Erreur lors de la création du fichier SPIFFS !");
-            return 0; // Ou une valeur par défaut appropriée
-        }
-
-        file.print(0);
-        file.close();
-
-        return 0; // La valeur par défaut après la création du fichier
+        DEBUG_PRINTLN("Erreur lors de l'ouverture du fichier wifi SPIFFS !");
+        return -1; // Retourner -1 en cas d'erreur
     }
 
-    int numPairs = file.read();
-    DEBUG_PRINTLN("numpaire trouve");
-    DEBUG_PRINTLN(numPairs);
+    int numLines = 0;
+    while (file.available())
+    {
+        if (file.readStringUntil('\n') != "")
+        {
+            numLines++;
+        }
+    }
+
     file.close();
-
-    return numPairs;
+    DEBUG_PRINTLN("Nombre de ligne fichier wifi");
+    DEBUG_PRINTLN(numLines);
+    return numLines;
 }
-
 
 // ... Les autres fonctions sont également mises à jour ...
 
 void saveWiFiCredentials(const String &ssid, const String &password, int index)
 {
-    String fileName = "/pair_" + String(index) + ".txt";
-    DEBUG_PRINTLN("nom du fichier qui sera créer ");
-    DEBUG_PRINTLN(fileName);
-    File file = SPIFFS.open(fileName, "w");
+   if (!SPIFFS.exists("/wifi.txt")) {
+        // Si le fichier n'existe pas, on le crée en mode "écriture"
+        File file = SPIFFS.open("/wifi.txt", "w");
+        if (!file)
+        {
+            DEBUG_PRINTLN("Erreur lors de la création du fichier SPIFFS !");
+            return;
+        }
+        file.close(); // Fermer le fichier immédiatement après la création
+    }
+
+    File file = SPIFFS.open("/wifi.txt", "a"); // Ouvrir le fichier en mode "ajouter"
     if (!file)
     {
         DEBUG_PRINTLN("Erreur lors de l'ouverture du fichier SPIFFS !");
         return;
     }
 
-    file.print(ssid);
-    file.print('\0'); // Null-terminate le SSID
-    file.print(password);
-    file.print('\0'); // Null-terminate le mot de passe
+    // Ajouter la paire ssid:password à une nouvelle ligne dans le fichier
+    file.println(ssid + ":" + password);
 
     file.close();
-    DEBUG_PRINTLN("log saved in SPIFFS in index");
-    DEBUG_PRINTLN(index);
-    incrementNumPairs();
+    DEBUG_PRINTLN("Credentials saved in SPIFFS");
 }
 
 bool retrieveWiFiCredentials(String &ssid, String &password, int index)
 {
-    String fileName = "/pair_" + String(index) + ".txt";
-    File file = SPIFFS.open(fileName, "r");
+    File file = SPIFFS.open("/wifi.txt", "r");
     if (!file)
     {
         DEBUG_PRINTLN("Erreur lors de l'ouverture du fichier SPIFFS !");
         return false;
     }
+    //  // Affichage du contenu du fichier
+    // while (file.available())
+    // {
+    //     String line = file.readStringUntil('\n');
+    //     DEBUG_PRINTLN(line);
+    // }
 
-    ssid = file.readStringUntil('\0');
-    password = file.readStringUntil('\0');
+    // // Remettre le curseur au début du fichier
+    // file.seek(0);
+
+    for (int i = 0; i <= index; i++) {
+        // Lire chaque paire ssid:password jusqu'à atteindre l'index souhaité
+        if (!file.available()) {
+            // Si on atteint la fin du fichier avant d'atteindre l'index souhaité, retourner false
+            file.close();
+            return false;
+        }
+        ssid = file.readStringUntil(':');
+        password = file.readStringUntil('\n');
+    }
 
     file.close();
     DEBUG_PRINTLN("log found");

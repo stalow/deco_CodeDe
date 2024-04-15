@@ -33,6 +33,7 @@ bool checkCredentials(const String &ssid, const String &password)
             return false;
         }
     }
+    WiFi.disconnect();
     DEBUG_PRINTLN("Credentials valid");
     return true;
 }
@@ -137,7 +138,7 @@ void setupWiFiAP()
 
 bool checkInitFile()
 {   
-    listFiles(); // voir tous les fichier dispo 
+    //listFiles(); // voir tous les fichier dispo 
     // Vérifier si le fichier "init.txt" existe
     if (SPIFFS.exists("/init.txt"))
     {
@@ -147,7 +148,7 @@ bool checkInitFile()
     else
     {
         DEBUG_PRINTLN("Le fichier init.txt n'existe pas.");
-        return true;
+        return false;
     }
 }
 

@@ -1,3 +1,4 @@
 *.json
 *.cfg
 *.svd
+./data/

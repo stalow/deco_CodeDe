@@ -11,7 +11,7 @@
 #define DEBUG_PRINTLN(x) // Si DEBUG_MODE est désactivé, cette macro est vide
 #endif
 
-#define CONNECTION_MAX_DELAY_WAIT 3 // 3*500ms
+#define CONNECTION_MAX_DELAY_WAIT 10 // 3*500ms
 
 
 #endif

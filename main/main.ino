@@ -56,8 +56,8 @@ void loop()
         DEBUG_PRINTLN("A Pressed");
         FLAG_BTN_A_PRESSED = true;
     }
-
-    // Face_detecte = detect_face();
+    setup_IMU();
+    Face_detecte = detect_face();
 
     // switch ETAT
     switch (currentState)
