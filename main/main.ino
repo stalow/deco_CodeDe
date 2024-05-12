@@ -12,7 +12,10 @@
 #include "./headers/Count.h"
 #include "./headers/Accelero.h"
 
+#include "./headers/gestion_rtc.h"
+
 #include "./headers/settings.h"
+
 
 enum State
 {
@@ -30,9 +33,10 @@ enum State
 
 State currentState = START;
 
-RTC_TimeTypeDef RTC_TimeStruct; // RTC struct
+const char* serialNumber = "xaf25";
+const char *serverUrl = "172.232.62.233:8080/tasks";
 
-const char *serverUrl = "http://example.com/api/endpoint";
+struct RTCData rtcData_memory;
 
 void setup()
 {
@@ -88,6 +92,7 @@ void loop()
         if (FLAG_BTN_A_PRESSED)
         {
             currentState = COUNTING;
+            getRTCData(&rtcData_memory);
             FLAG_BTN_A_PRESSED = false; //reset
         }
         // Ajoutez le code correspondant pour le mode IDLE ici
@@ -154,6 +159,16 @@ void loop()
         DEBUG_PRINTLN("État inconnu");
     }
 
+
+
+
+
+
+
+
+
+
+
     // switch SORTIE
     switch (currentState)
     {
@@ -196,6 +211,7 @@ void loop()
         DEBUG_PRINTLN("En mode CONNWIFI");
         if (connectToStoredWiFi())
         {
+            set_local_time();
             FLAG_WIFI_CONNECTED = true;
         }
         else
@@ -213,26 +229,18 @@ void loop()
         }
         else
         {
-            // comptabilisation du temp passe
-            M5.Rtc.GetTime(&RTC_TimeStruct);
-            Temp_ecoule = number_of_second(RTC_TimeStruct.Hours, RTC_TimeStruct.Minutes, RTC_TimeStruct.Seconds);
-            Count_time(ancienne_face, Temp_ecoule);
+            Temp_ecoule = time_difference(rtcData_memory); // calcul entre temps actuelle et passé
+            Count_time(ancienne_face, Temp_ecoule, rtcData_memory);
             Temp_ecoule = 0; // reset
 
-            // reset TIME =0
-            RTC_TimeTypeDef TimeStruct;
-            TimeStruct.Hours = 0; // Set the time.
-            TimeStruct.Minutes = 0;
-            TimeStruct.Seconds = 0;
-            M5.Rtc.SetTime(&TimeStruct); // writes the set time to the real time clock.
-
+            getRTCData(&rtcData_memory);
             ancienne_face = Face_detecte;
         }
         // Ajoutez le code correspondant pour le mode INIT ici
         break;
     case ACK_COMPT:
         DEBUG_PRINTLN("En mode ACK_COMPT");
-        sendPostRequestAndReset(Tab_Temp, serverUrl);
+        sendPostRequestAndReset(Tab_Temp, serverUrl,serialNumber);
         FLAG_ACK_DATA_FINISH = true;
         // Ajoutez le code correspondant pour le mode ACK_COMPT ici
         break;
@@ -245,5 +253,5 @@ void loop()
         DEBUG_PRINTLN("État inconnu");
     }
 
-    delay(1000); // Ajoutez un délai pour éviter une exécution trop rapide de la boucle
+    delay(100); // Ajoutez un délai pour éviter une exécution trop rapide de la boucle
 }

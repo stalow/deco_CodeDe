@@ -4,7 +4,7 @@
 
 
 
-void sendPostRequestAndReset(unsigned long Temp_Tab[6], const char *url) ;
+void sendPostRequestAndReset(unsigned long Temp_Tab[6], const char *url, const char *serialNumber)  ;
 
 
 

@@ -35,36 +35,36 @@ unsigned char detect_face()
       -0.2 <= accY && accY <= 0.2 &&
       -1.2 <= accZ && accZ <= -0.8)
   {
-   DEBUG_PRINTLN("face1");
-    return 1;
+   DEBUG_PRINTLN("face5");
+    return 5;
   }
   else if (-0.2 <= accX && accX <= 0.2 &&
            0.8 <= accY && accY <= 1.2 &&
            -0.2 <= accZ && accZ <= 0.2)
   {
+   DEBUG_PRINTLN("face4");
+    return 4;
+  }
+  else if ((-1.2 <= accX && accX <= -0.8) &&
+           (-0.2 <= accY && accY <= 0.2) &&
+           (-0.2 <= accZ && accZ <= 0.2))
+  {
    DEBUG_PRINTLN("face2");
     return 2;
   }
-  else if ((-1.2 <= accX && accX <= -0.8) &&
+  else if ((0.8 <= accX && accX <= 1.2) &&
            (-0.2 <= accY && accY <= 0.2) &&
            (-0.2 <= accZ && accZ <= 0.2))
   {
    DEBUG_PRINTLN("face3");
     return 3;
   }
-  else if ((0.8 <= accX && accX <= 1.2) &&
-           (-0.2 <= accY && accY <= 0.2) &&
-           (-0.2 <= accZ && accZ <= 0.2))
-  {
-   DEBUG_PRINTLN("face4");
-    return 4;
-  }
   else if ((-0.2 <= accX && accX <= 0.2) &&
            (-1.2 <= accY && accY <= -0.8) &&
            (-0.2 <= accZ && accZ <= 0.2))
   {
-   DEBUG_PRINTLN("face5");
-    return 5;
+   DEBUG_PRINTLN("face1");
+    return 1;
   }
   else if ((-0.2 <= accX && accX <= 0.2) &&
            (-0.2 <= accY && accY <= 0.2) &&
